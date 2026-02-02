@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,6 +17,7 @@ import com.example.lfg.Repo.urlrepo;
 import com.example.lfg.model.url;
 
 @Service
+@Component
 public class urlservice {
     private final urlrepo urlrepo;
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -51,4 +53,12 @@ public class urlservice {
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "URL not found"));
     return urlEntity.getUrl();
     }
+   public List<url> getdetails() {
+        
+    return urlrepo.findAll();
+
+   }
+   public void deleteUrl(int id) {
+    urlrepo.deleteById(id);
+   }
 }
