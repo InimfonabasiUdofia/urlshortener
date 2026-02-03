@@ -13,3 +13,7 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t urlchanger .
+databases:
+  - name: urlshortener-db
+    databaseName: urlshortener
+    plan: starter
