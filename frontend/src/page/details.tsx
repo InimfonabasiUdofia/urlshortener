@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Copy, Check, ExternalLink, Trash2, BarChart3, Search, Link } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Copy, Check, ExternalLink, Trash2, Link } from 'lucide-react';
 import Navbar from '../components/navbar';
 
 // Define the interface based on your API response
@@ -12,7 +12,7 @@ interface ShortenedUrl {
 
 export default function Details() {
     const [copied, setCopied] = useState<number | null>(null);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+   
     const [links, setLinks] = useState<ShortenedUrl[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -88,11 +88,7 @@ export default function Details() {
         detailFunction();
     }, []);
 
-    // Filter links based on search query
-    const filteredLinks = links.filter(link =>
-        link.url?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        link.urlcode?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+
 
     // Format date
     const formatDate = (dateString: string): string => {
@@ -144,7 +140,7 @@ export default function Details() {
                             <p className="text-gray-600">Loading...</p>
                         </div>
                     ) : (
-                        filteredLinks.map((link) => (
+                        links.map((link) => (
                             <div key={link.id} className="bg-white  shadow-md hover:shadow-lg transition-shadow p-6">
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
                                     {/* URLs Section */}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Copy, Link2, Sparkles, ArrowRight, Check } from 'lucide-react';
 import Navbar from '../components/navbar';
 
@@ -21,21 +21,7 @@ export default function Home() {
       setModifiedUrl('');
     }
   };
-  const click=async()=>{
-     try {
-    const response = await fetch("http://localhost:8080/api/url");
-
-    if (!response.ok) {
-      throw new Error("Request failed");
-    }
-
-    const data = await response.text();
-    console.log(data);
-    console.log(data)
-  } catch (e) {
-    console.log(e);
-  }
-  }
+ 
   async function createUrl() {
   try {
     const res = await fetch("http://localhost:8080/api/url", {
@@ -112,7 +98,7 @@ export default function Home() {
                 Modified URL
               </label>
               <div className="relative">
-                <div className="w-full px-6 py-4 text-lg bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-2xl break-all">
+                <div className="w-full px-6 py-4 text-lg bg-linear-to-r from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-2xl break-all">
                   {modifiedUrl}
                 </div>
                 <button
