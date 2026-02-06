@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Copy, Check, ExternalLink, Trash2, Link } from 'lucide-react';
 import Navbar from '../components/navbar';
 
+
 // Define the interface based on your API response
 interface ShortenedUrl {
     id: number;
@@ -11,6 +12,8 @@ interface ShortenedUrl {
 }
 
 export default function Details() {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log(backendUrl);
     const [copied, setCopied] = useState<number | null>(null);
    
     const [links, setLinks] = useState<ShortenedUrl[]>([]);
@@ -33,7 +36,7 @@ export default function Details() {
         }
 
         // Fetch with Authorization header
-        const response = await fetch("http://localhost:8080/api/details", {
+        const response = await fetch(`${backendUrl}/api/details`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -71,8 +74,12 @@ export default function Details() {
         if (confirm('Are you sure you want to delete this link?')) {
             try {
                 // Add your delete API call here
-                const response = await fetch(`http://localhost:8080/api/url/${id}`, {
-                    method: 'DELETE'
+                const response = await fetch(`${backendUrl}/api/url/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+            }
                 });
 
                 if (response.ok) {
@@ -102,7 +109,8 @@ export default function Details() {
 
     // Build full short URL
     const getShortUrl = (urlcode: string): string => {
-        return `http://localhost:8080/${urlcode}`;
+        return `${backendUrl}/${urlcode}`;
+        
     };
 
     return (

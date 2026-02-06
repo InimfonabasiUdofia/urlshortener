@@ -4,6 +4,7 @@ import './App.css'
 import Home from './page/Home'
 import LoginPage from './auth/login';
 import Details from './page/details';
+import ProtectedRoute from "./page/protected";
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
        <Route path="/login" element={<LoginPage></LoginPage>} />
-       <Route path="/detail" element={<Details></Details>} />
+       <Route path="/detail" element={<ProtectedRoute><Details /></ProtectedRoute>} />
       </Routes>
       
     </BrowserRouter>

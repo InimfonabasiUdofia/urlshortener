@@ -3,6 +3,7 @@ import { Copy, Link2, Sparkles, ArrowRight, Check } from 'lucide-react';
 import Navbar from '../components/navbar';
 
 export default function Home() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [originalUrl, setOriginalUrl] = useState('');
   const [modifiedUrl, setModifiedUrl] = useState('');
   const [copied, setCopied] = useState(false);
@@ -24,13 +25,12 @@ export default function Home() {
  
   async function createUrl() {
   try {
-    const res = await fetch("http://localhost:8080/api/url", {
+    const res = await fetch(`${backendUrl}/api/url`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: 
-         originalUrl,
+      body: JSON.stringify({ url: originalUrl }),
     });
 
     if (!res.ok) {

@@ -56,27 +56,24 @@ export default function LoginPage() {
         // LOGIN
         // const basicAuth = btoa(`${formData.username}:${formData.password}`);
         const response = await fetch('http://localhost:8080/api/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    email: formData.username,
-    password: formData.password
-  })
-});
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: formData.username,
+            password: formData.password
+          })
+        });
 
         if (response.ok) {
-          
-          
-         const token = await response.text();  // use text() instead of json()
-        localStorage.setItem('token',token);
+
+
+          const token = await response.text();  // use text() instead of json()
+          localStorage.setItem('token', token);
           console.log(localStorage.getItem('token'));
-          
+
           setSuccess('Login successful! Redirecting...');
-          
-          // Redirect after 1 second
-          // setTimeout(() => {
-          //   window.location.href = '/dashboard';
-          // }, 1000);
+
+         window.location.href = '/';
         } else {
           setError('Invalid username or password');
         }
@@ -122,11 +119,10 @@ export default function LoginPage() {
                 setError('');
                 setSuccess('');
               }}
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
-                isLogin
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${isLogin
                   ? 'bg-white text-black shadow-md'
                   : 'text-gray-600 hover:text-gray-800'
-              }`}
+                }`}
             >
               Login
             </button>
@@ -136,11 +132,10 @@ export default function LoginPage() {
                 setError('');
                 setSuccess('');
               }}
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
-                !isLogin
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${!isLogin
                   ? 'bg-white text-black shadow-md'
                   : 'text-gray-600 hover:text-gray-800'
-              }`}
+                }`}
             >
               Sign Up
             </button>
@@ -163,16 +158,16 @@ export default function LoginPage() {
             {/* Username Input (shown for both login and signup) */}
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700 ml-1">
-                Username
+                Email
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  type="text"
+                  type="email"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  placeholder="johndoe"
+                  placeholder="email"
                   required
                   className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
                 />
@@ -288,7 +283,7 @@ export default function LoginPage() {
           </div>
 
           {/* Social Login Buttons */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid ">
             <button className="flex items-center justify-center px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -298,12 +293,7 @@ export default function LoginPage() {
               </svg>
               Google
             </button>
-            <button className="flex items-center justify-center px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
-              <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-              Facebook
-            </button>
+           
           </div>
         </div>
 

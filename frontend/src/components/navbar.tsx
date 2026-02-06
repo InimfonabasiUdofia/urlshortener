@@ -1,22 +1,30 @@
-import  { useState } from 'react';
+import  {  useState } from 'react';
 import { Menu, X,  LogIn, LogOut } from 'lucide-react';
+import AuthContext from '../auth/auth';
+
+
 
 export default function Navbar() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Change based on your auth state
+ 
+ 
+
+// interface AuthContextType {
+//   readonly TOKEN_KEY: 'jwt_token';
+
+//   getToken(): string | null;
+//   setToken(token: string): void;
+//   removeToken(): void;
+//   isAuthenticated(): boolean;
+//   isTokenExpired(token: string): boolean;
+  
+// }
+// // const AuthContext = createContext<AuthContextType | null>(null);
 
 
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    // Add your logout logic here
-  };
 
-  const handleLogin = () => {
-    // Navigate to login page
-    window.location.href = '/login';
-  };
 
   return (
     <>
@@ -51,13 +59,13 @@ export default function Navbar() {
               <span className="absolute inset-0    rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </a>
 
-            {!isLoggedIn && (
+            {AuthContext.isAuthenticated() && (
               <a
-                href="/history"
+                href="/details"
                 className="flex items-center space-x-2 px-4 py-2 text-xl hover:cursor-pointer hover:text-gray-300  text-white transition-all duration-200 group relative rounded-lg"
               >
                
-                <span>History</span>
+                <span>Details</span>
                 <span className="absolute inset-0    rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>
             )}
@@ -65,25 +73,26 @@ export default function Navbar() {
 
           {/* Auth Button - Desktop */}
           <div className="hidden md:block">
-            {isLoggedIn ? (
+            {AuthContext.isAuthenticated() ? (
               <button
-                onClick={handleLogout}
-                className="flex items-center space-x-2 px-5 py-2 text-black  hover:cursor-pointer transition-colors duration-200 font-medium group"
+                onClick={() => {
+                  AuthContext.removeToken();
+                  window.location.href = '/login';
+                }}
+                className="flex items-center space-x-2 px-5 py-2 text-white  hover:cursor-pointer transition-colors duration-200 font-medium group"
               >
                 <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                 <span>Logout</span>
               </button>
             ) : (
               <button
-                onClick={handleLogin}
-                className="relative px-6 py-2.5 font-semibold text-black hover:cursor-pointer overflow-hidden rounded-lg group"
+                onClick={() => {
+                  window.location.href = '/login';
+                }}
+                className="flex items-center space-x-2 px-5 py-2 text-white  hover:cursor-pointer transition-colors duration-200 font-medium group"
               >
-                <div className="absolute inset-0 bg-white transition-transform duration-300 group-hover:scale-105" />
-                <div className="absolute inset-0 b opacity-50 group-hover:opacity-75 transition-opacity" />
-                <span className="relative z-10 flex items-center space-x-2">
-                  <LogIn className="w-4 h-4" />
-                  <span>Login</span>
-                </span>
+                <LogIn className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                <span>Login</span>
               </button>
             )}
           </div>
@@ -113,20 +122,23 @@ export default function Navbar() {
             <span className="font-medium">Home</span>
           </a>
 
-          {!isLoggedIn && (
+          {AuthContext.isAuthenticated() && (
             <a
-              href="/history"
+              href="/details"
               className="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:text-white hover:cursor-pointer rounded-lg transition-all duration-200"
             >
               
-              <span className="font-medium">History</span>
+              <span className="font-medium">Detials</span>
             </a>
           )}
 
           <div className="pt-2">
-            {isLoggedIn ? (
+            {AuthContext.isAuthenticated() ? (
               <button
-                onClick={handleLogout}
+                onClick={()=>{
+                  AuthContext.removeToken()
+                  window.location.href = '/login';;
+                }}
                 className="flex items-center space-x-3 w-full px-4 py-3 text-gray-300 hover:text-white hover:bg-violet-500/10 rounded-lg transition-all duration-200 font-medium"
               >
                 <LogOut className="w-5 h-5" />
@@ -134,7 +146,9 @@ export default function Navbar() {
               </button>
             ) : (
               <button
-                onClick={handleLogin}
+              onClick={()=>{
+                window.location.href = '/login';
+              }}
                 className="flex items-center justify-center space-x-2 w-full px-4 py-3 font-semibold  bg-white text-black rounded-lg hover:shadow-lg hover:cursor-pointer transition-all duration-200"
               >
                 <LogIn className="w-5 h-5" />
