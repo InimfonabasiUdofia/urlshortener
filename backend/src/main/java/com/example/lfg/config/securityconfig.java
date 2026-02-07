@@ -74,7 +74,7 @@ public class securityconfig {  // ✅ Renamed to follow Java naming conventions
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000","https://urlshortener-kk9vhkvzj-inimfonas-projects.vercel.app/"));  // ✅ Add your frontend URLs
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000","https://urlshortener-kk9vhkvzj-inimfonas-projects.vercel.app"));  // ✅ Add your frontend URLs
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
