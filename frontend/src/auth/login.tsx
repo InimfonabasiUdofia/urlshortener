@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, LogIn, UserPlus, User } from 'lucide-react';
 
 export default function LoginPage() {
+   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ export default function LoginPage() {
           return;
         }
 
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch(`${backendUrl}/api/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -55,7 +56,7 @@ export default function LoginPage() {
       } else {
         // LOGIN
         // const basicAuth = btoa(`${formData.username}:${formData.password}`);
-        const response = await fetch('http://localhost:8080/api/login', {
+        const response = await fetch(`${backendUrl}/api/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
