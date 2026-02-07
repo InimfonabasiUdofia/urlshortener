@@ -72,19 +72,25 @@ public class securityconfig {  // ✅ Renamed to follow Java naming conventions
      * CORS Configuration Bean - More robust than WebMvcConfigurer
      */
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000","https://urlshortener-kk9vhkvzj-inimfonas-projects.vercel.app"));  // ✅ Add your frontend URLs
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(List.of("Authorization"));  // ✅ Expose Authorization header
-        configuration.setMaxAge(3600L);  // ✅ Cache preflight response for 1 hour
-        
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    
+    // Allow your Vercel frontend
+    configuration.setAllowedOriginPatterns(List.of(
+        "http://localhost:*",
+        "https://*.vercel.app"  // This covers ALL your Vercel deployments
+    ));
+    
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
+    configuration.setExposedHeaders(List.of("Authorization"));
+    configuration.setMaxAge(3600L);
+    
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
 
     /**
      * Authentication Manager Bean
