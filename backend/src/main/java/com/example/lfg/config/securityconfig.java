@@ -44,7 +44,7 @@ public class securityconfig {  // ✅ Renamed to follow Java naming conventions
             
             // Configure authorization
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/register", "/api/login", "/api/auth/**").permitAll()  // ✅ Public endpoints
+                .requestMatchers("/api/register", "/api/login", "/api/auth/**","/{code}").permitAll()  // ✅ Public endpoints
                 .anyRequest().authenticated()  // ✅ All other endpoints require authentication
             )
             
@@ -74,7 +74,7 @@ public class securityconfig {  // ✅ Renamed to follow Java naming conventions
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000"));  // ✅ Add your frontend URLs
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000","https://urlshortener-kk9vhkvzj-inimfonas-projects.vercel.app/"));  // ✅ Add your frontend URLs
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
