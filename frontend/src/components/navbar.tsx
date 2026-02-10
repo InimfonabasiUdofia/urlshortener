@@ -10,20 +10,6 @@ export default function Navbar() {
  
  
 
-// interface AuthContextType {
-//   readonly TOKEN_KEY: 'jwt_token';
-
-//   getToken(): string | null;
-//   setToken(token: string): void;
-//   removeToken(): void;
-//   isAuthenticated(): boolean;
-//   isTokenExpired(token: string): boolean;
-  
-// }
-// // const AuthContext = createContext<AuthContextType | null>(null);
-
-
-
 
 
   return (

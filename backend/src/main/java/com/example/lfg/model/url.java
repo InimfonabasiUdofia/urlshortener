@@ -2,8 +2,10 @@ package com.example.lfg.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -19,6 +21,9 @@ public class url {
     String url;
     String urlcode;
     LocalDateTime time;
+      @CreatedBy
+    @Column(name = "created_by", nullable = true) // nullable=true for existing records
+    private String createdBy;
 
     
     public url() {
@@ -30,6 +35,13 @@ public class url {
         this.url = url;
         this.urlcode = urlcode;
         this.time = time;
+    }
+     public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
 
@@ -75,7 +87,7 @@ public class url {
 
     @Override
     public String toString() {
-        return "url [id=" + id + ", url=" + url + ", urlcode=" + urlcode + ", time=" + time + "]";
+        return "url [id=" + id + ", url=" + url + ", urlcode=" + urlcode + ", time=" + time + ", createdBy=" + createdBy + "]";
     }
     
 

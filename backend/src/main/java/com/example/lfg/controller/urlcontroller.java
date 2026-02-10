@@ -37,7 +37,7 @@ public class urlcontroller {
         urlservice.addurl(url);
     }
 
-    @GetMapping("/api/details")
+    @GetMapping("details")
     public List<url> getDetails(){
         return urlservice.getdetails();
     }

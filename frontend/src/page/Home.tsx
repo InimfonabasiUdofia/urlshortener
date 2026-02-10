@@ -7,6 +7,7 @@ export default function Home() {
   const [originalUrl, setOriginalUrl] = useState('');
   const [modifiedUrl, setModifiedUrl] = useState('');
   const [copied, setCopied] = useState(false);
+  const token = localStorage.getItem('token');
 
   const handleChange = (e:any) => {
     const url = e.target.value;
@@ -28,9 +29,10 @@ export default function Home() {
     const res = await fetch(`${backendUrl}/api/url`, {
       method: "POST",
       headers: {
+         'Authorization': `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url: originalUrl }),
+      body:  originalUrl ,
     });
 
     if (!res.ok) {
