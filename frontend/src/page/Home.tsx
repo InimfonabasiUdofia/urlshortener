@@ -1,12 +1,16 @@
 import  { useState } from 'react';
 import { Copy, Link2, Sparkles, ArrowRight, Check } from 'lucide-react';
 import Navbar from '../components/navbar';
+import load from "../../public/load.svg"
+
 
 export default function Home() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [originalUrl, setOriginalUrl] = useState('');
   const [modifiedUrl, setModifiedUrl] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
   const handleChange = (e:any) => {
@@ -21,11 +25,13 @@ export default function Home() {
       setModifiedUrl(modified);
     } else {
       setModifiedUrl('');
+      
     }
   };
  
   async function createUrl() {
   try {
+    setIsLoading(true);
     const res = await fetch(`${backendUrl}/api/url`, {
       method: "POST",
       headers: {
@@ -36,15 +42,18 @@ export default function Home() {
     });
 
     if (!res.ok) {
+       setError("Failed to create url");
       throw new Error("Failed to create url");
+        
     }
 
-    const data = await res.json();
-    console.log(data);
+  
+    setOriginalUrl("");
+    setError("successfully created url");
   } catch (err) {
     console.error(err);
   }finally{
-    console.log("succesfull")
+    setIsLoading(false);
   }
 }
 
@@ -68,11 +77,25 @@ export default function Home() {
         {/* Main Card */}
         <div className="bg-white lg:mt-25 mt-15  rounded-3xl shadow-2xl p-8 space-y-8">
           {/* Original URL Input */}
+          {error ==="successfully created url"? 
+            <div className=" text-green-700 p-3 rounded-lg text-center">
+              {error}
+            </div>:
+            <div className=" text-red-700 p-3 rounded-lg text-center">
+              {error}
+            </div>
+          }
           <div className="space-y-3">
             <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
               <Sparkles className="w-4 h-4 mr-2 text-black" />
               Enter Your URL
             </label>
+{isLoading && (
+  <div className="fixed inset-0 flex justify-center items-center bg-black/20 backdrop-blur-sm z-50">
+    <img src={load} alt="Loading" className="w-10 h-10" />
+  </div>
+)}
+           
             <input
               type="text"
               value={originalUrl}
@@ -84,8 +107,10 @@ export default function Home() {
 
           {/* Arrow Indicator */}
           {originalUrl && (
-            <div className="flex justify-center"
-            onClick={createUrl}>
+            <div className="flex justify-center cursor-pointer"
+            onClick={()=>{
+              createUrl();
+            }}>
               <div className=" bg-black p-3 rounded-full animate-bounce">
                 <ArrowRight className="w-6 h-6 text-white" />
               </div>

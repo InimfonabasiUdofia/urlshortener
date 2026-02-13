@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Copy, Check, ExternalLink, Trash2, Link } from 'lucide-react';
 import Navbar from '../components/navbar';
+import load from "../../public/load.svg"
 
 interface ShortenedUrl {
     id: number;
@@ -55,11 +56,12 @@ export default function Details() {
         } finally {
             setLoading(false);
         }
-    }, [backendUrl]);
+    }, []);
 
     useEffect(() => {
         detailFunction();
     }, [detailFunction]);
+    
 
     const handleCopy = async (shortUrl: string, id: number): Promise<void> => {
         try {
@@ -144,8 +146,8 @@ export default function Details() {
                     {/* Links List */}
                     <div className="space-y-4 pt-5">
                         {loading ? (
-                            <div className="bg-white shadow p-12 text-center">
-                                <p className="text-gray-600">Loading...</p>
+                            <div className="bg-white shadow p-12 justify-center  flex">
+                                <img src={load} alt="Loading" className="w-10 h-10" />
                             </div>
                         ) : links.length === 0 ? (
                             <div className="bg-white shadow p-12 text-center">
